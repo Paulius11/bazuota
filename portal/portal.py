@@ -3,8 +3,7 @@
     Proxies - -
 https://www.alpharithms.com/scraping-dynamic-websites-with-webdriver-python-253418/
 """
-from os import path
-
+from os import path, getcwd
 from selenium import webdriver as web_driver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -72,6 +71,13 @@ class Browser:
         self.options = self.webdriver.ChromeOptions()
         extension_path = path.join(PROJECT_PATH, self.extension)
         logger.debug(f'Extension path: {extension_path}')
+        if not path.exists(extension_path):
+            logger.debug(f'Changing path')
+            extension_path = path.join(getcwd(), self.extension)
+            if path.exists(extension_path):
+                logger.debug(f'Extension path: {extension_path}')
+                self.options.add_extension(extension_path)
+                return
         if path.exists(extension_path):
             self.options.add_extension(extension_path)
         else:
