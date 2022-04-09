@@ -1,1 +1,1 @@
-from .bsc_networks import SetupNetworkConnection
+from .crypto_networks import CryptoNetworkConnector

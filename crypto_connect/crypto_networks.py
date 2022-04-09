@@ -65,7 +65,10 @@ def check_address(contract_address):
     return Web3.toChecksumAddress(contract_address)
 
 
-class SetupNetworkConnection:
+class CryptoNetworkConnector:
+    """
+    Automatically connect to testnet or mainet
+    """
     def __init__(self, testnet: bool):
         self.testnet = testnet
         if testnet:
@@ -237,7 +240,7 @@ class SetupNetworkConnection:
 
 
 def main():
-    n = SetupNetworkConnection(testnet=False)
+    n = CryptoNetworkConnector(testnet=False)
     # n.get_abi("0x2859e4544c4bb03966803b044a93563bd2d0dd4d")  # Mainnet
     n.get_bnb_price()
     # fak = n.get_factory()
