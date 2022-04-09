@@ -5,29 +5,44 @@ import requests
 from dotenv import dotenv_values
 from eth_typing import ChecksumAddress
 from web3 import Web3
+from os import path
+import os
 
 ETHER = 10 ** 18
+RUNNER_PATH = os.getcwd()
+THIS_PATH = path.abspath(path.dirname(__file__))
 
-config_network = dotenv_values(".network")
-# config_private = dotenv_values(".env")
+file_network_path = path.join(THIS_PATH, ".network")
+config_network = dotenv_values(file_network_path)
+file_env_path = path.join(RUNNER_PATH, ".env")
+config_private = dotenv_values(file_env_path)
+
+if not os.path.exists(file_network_path): raise ValueError(f'.network file not found in {file_network_path}')
+if not os.path.exists(file_env_path): raise ValueError(f'.env file not found in {file_env_path}')
 
 BSC_MAINNET = config_network.get("BSC_MAINNET")
 
 BSC_MAINNET_CHAIN_ID = config_network.get("BSC_CHAIN_ID")
-BSC_MAINNET_EXPLORER_API_URL = config_network.get("BSC_MAINNET_BLOCK_EXPLORER_API")
-BSC_MAINNET_EXPLORER_API_KEY = config_network.get("BSC_MAINNET_BLOCK_EXPLORER_API_KEY")
 BSC_MAINNET_WBMB = config_network.get("PANKAKE_WBNB_MAINNET")
 BSC_MAINNET_BUSD = config_network.get("PANKAKE_BUSD_ADDRESS")
 BSC_MAINNET_FACTORY = config_network.get("PANKAKE_FACTORY_V2_MAINNET")
 BSC_MAINNET_ROUTER = config_network.get("PANKAKE_ROUTER_V2_MAINNET")
+# API
+BSC_MAINNET_EXPLORER_API_URL = config_network.get("BSC_MAINNET_BLOCK_EXPLORER_API")
+BSC_MAINNET_EXPLORER_API_KEY = config_private.get("BSC_MAINNET_BLOCK_EXPLORER_API_KEY")
+
+
 
 BSC_TESTNET = config_network.get("BSC_TESTNET")
-BSC_TESTNET_BLOCK_EXPLORER_API_URL = config_network.get("BSC_TESTNET_BLOCK_EXPLORER_API")
 BSC_TESTNET_CHAIN_ID = config_network.get("BSC_CHAIN_ID_TEST")
 BSC_TESTNET_WBMB = config_network.get("PANKAKESWAP_WBNB_TESTNET")
 BSC_TESTNET_BUSD = config_network.get("PANKAKE_BUSD_ADDRESS_TEST")
 BSC_TESTNET_FACTORY = config_network.get("PANKAKE_FACTORY_V2_TESTNET")
 BSC_TESTNET_ROUTER = config_network.get("PANKAKE_ROUTER_V2_TESTNET")
+#API
+BSC_TESTNET_BLOCK_EXPLORER_API_URL = config_network.get("BSC_TESTNET_BLOCK_EXPLORER_API")
+
+
 
 NETWORKS = config_network
 
@@ -186,10 +201,13 @@ class SetupNetworkConnection:
         return json.loads(response_json.get("result"))
 
     def get_bnb_price(self):
-        bnbPrice = requests.get(
-            self.explorer_api_url + "/api?module=stats&action=bnbprice&apikey=" + self.explorer_api_key)
-        price = bnbPrice.json()['result']['ethusd']
-        print(f"BNB: {price} USD")
+        try:
+            bnbPrice = requests.get(
+                self.explorer_api_url + "/api?module=stats&action=bnbprice&apikey=" + self.explorer_api_key)
+            price = bnbPrice.json()['result']['ethusd']
+            print(f"BNB: {price} USD")
+        except TypeError:
+           raise "Please add 'BSC_MAINNET_EXPLORER_API_KEY' api in .evn "
         return price
 
     def print_transaction_link(self, transaction_hash):
