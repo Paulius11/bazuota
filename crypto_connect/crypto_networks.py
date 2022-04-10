@@ -117,11 +117,15 @@ class CryptoNetworkConnector:
         "Get factory object"
         return self.web3.eth.contract(address=self.factory_address, abi=ABI_FACTORY)
 
+    def get_router(self):
+        "Get factory object"
+        return self.web3.eth.contract(address=self.router_address, abi=ABI_ROUTER)
+
+
     def _get_pair_address(self, contract_address, base_currency: ChecksumAddress):
         pair_address = self._get_factory().functions.getPair(base_currency, check_address(contract_address)).call()
-        print(f'Pair address: {pair_address}')
         pair_check = check_address(pair_address)
-        return pair_check
+        return pair_address
 
     def __get_price(self, token, decimals, pair_contract, is_reversed, is_price_in_peg):
         peg_reserve = 0
@@ -149,7 +153,7 @@ class CryptoNetworkConnector:
 
     def get_price_bnb(self, custom_token, base_currency):
         """
-        Get price is usdt
+        Get price in usdt
         :param custom_token: token you want to check
         :return: price in $
         """
