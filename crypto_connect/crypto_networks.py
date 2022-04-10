@@ -113,7 +113,7 @@ class CryptoNetworkConnector:
         self.web3 = Web3(Web3.HTTPProvider(self.network))
         return self.web3
 
-    def _get_factory(self):
+    def get_factory(self):
         "Get factory object"
         return self.web3.eth.contract(address=self.factory_address, abi=ABI_FACTORY)
 
@@ -123,7 +123,7 @@ class CryptoNetworkConnector:
 
 
     def _get_pair_address(self, contract_address, base_currency: ChecksumAddress):
-        pair_address = self._get_factory().functions.getPair(base_currency, check_address(contract_address)).call()
+        pair_address = self.get_factory().functions.getPair(base_currency, check_address(contract_address)).call()
         pair_check = check_address(pair_address)
         return pair_address
 
