@@ -88,6 +88,8 @@ class CryptoNetworkConnector:
             self.explorer_api_url = BSC_TESTNET_BLOCK_EXPLORER_API_URL
             self.explorer_url = "https://testnet.bscscan.com/"
             self.automate_market_maker = "https://pancake.kiemtienonline360.com/"
+            print("Faucet  : https://testnet.binance.org/faucet-smart")
+
 
         if network == Network.BSC_MAINNET:
             messege = "Running BSC mainnet..."
