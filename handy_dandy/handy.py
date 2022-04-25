@@ -46,12 +46,14 @@ def time_format(seconds: int):
             return '{:02d}s'.format(s)
     return '-'
 
-
-def confirm_prompt() -> bool:
-    """
-    Yes promp for methods
-    """
-    reply = None
-    while reply not in ("", "y", "n"):
-        reply = input(f"Are you sure? (Y/n): \n").lower()
-    return reply in ("", "y")
+def single_yes_or_no_question(question, default_no=True):
+    "Simple question for yes no"
+    choices = ' [y/N]: ' if default_no else ' [Y/n]: '
+    default_answer = 'n' if default_no else 'y'
+    reply = str(input(question + choices)).lower().strip() or default_answer
+    if reply[0] == 'y':
+        return True
+    if reply[0] == 'n':
+        return False
+    else:
+        return False if default_no else True
