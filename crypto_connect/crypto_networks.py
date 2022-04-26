@@ -1,13 +1,13 @@
 import json
+import os
 from decimal import Decimal
 from enum import Enum
+from os import path
 
 import requests
 from dotenv import dotenv_values
 from eth_typing import ChecksumAddress
 from web3 import Web3
-from os import path
-import os
 
 ETHER = 10 ** 18
 RUNNER_PATH = os.getcwd()
@@ -32,18 +32,15 @@ BSC_MAINNET_ROUTER = config_network.get("PANKAKE_ROUTER_V2_MAINNET")
 BSC_MAINNET_EXPLORER_API_URL = config_network.get("BSC_MAINNET_BLOCK_EXPLORER_API")
 BSC_MAINNET_EXPLORER_API_KEY = config_private.get("BSC_MAINNET_BLOCK_EXPLORER_API_KEY")
 
-
-
 BSC_TESTNET = config_network.get("BSC_TESTNET")
 BSC_TESTNET_CHAIN_ID = config_network.get("BSC_CHAIN_ID_TEST")
 BSC_TESTNET_WBMB = config_network.get("PANKAKESWAP_WBNB_TESTNET")
 BSC_TESTNET_BUSD = config_network.get("PANKAKE_BUSD_ADDRESS_TEST")
 BSC_TESTNET_FACTORY = config_network.get("PANKAKE_FACTORY_V2_TESTNET")
 BSC_TESTNET_ROUTER = config_network.get("PANKAKE_ROUTER_V2_TESTNET")
-#API
+# API
 BSC_TESTNET_BLOCK_EXPLORER_API_URL = config_network.get("BSC_TESTNET_BLOCK_EXPLORER_API")
 BSC_TESTNET_BLOCK_EXPLORER_API_KEY = config_private.get("BSC_TESTNET_BLOCK_EXPLORER_API_KEY")
-
 
 NETWORKS = config_network
 
@@ -60,9 +57,11 @@ ABI_FACTORY_PAIR = json.loads(
     '[{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"},{"indexed":true,"internalType":"address","name":"to","type":"address"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount0","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1","type":"uint256"}],"name":"Mint","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount0In","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1In","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount0Out","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount1Out","type":"uint256"},{"indexed":true,"internalType":"address","name":"to","type":"address"}],"name":"Swap","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint112","name":"reserve0","type":"uint112"},{"indexed":false,"internalType":"uint112","name":"reserve1","type":"uint112"}],"name":"Sync","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"constant":true,"inputs":[],"name":"DOMAIN_SEPARATOR","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"MINIMUM_LIQUIDITY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"PERMIT_TYPEHASH","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"to","type":"address"}],"name":"burn","outputs":[{"internalType":"uint256","name":"amount0","type":"uint256"},{"internalType":"uint256","name":"amount1","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"factory","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getReserves","outputs":[{"internalType":"uint112","name":"_reserve0","type":"uint112"},{"internalType":"uint112","name":"_reserve1","type":"uint112"},{"internalType":"uint32","name":"_blockTimestampLast","type":"uint32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_token0","type":"address"},{"internalType":"address","name":"_token1","type":"address"}],"name":"initialize","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"kLast","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"to","type":"address"}],"name":"mint","outputs":[{"internalType":"uint256","name":"liquidity","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"nonces","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"permit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"price0CumulativeLast","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"price1CumulativeLast","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"to","type":"address"}],"name":"skim","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"amount0Out","type":"uint256"},{"internalType":"uint256","name":"amount1Out","type":"uint256"},{"internalType":"address","name":"to","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"swap","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"sync","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"token0","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"token1","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]'
 )
 
+
 class Network(Enum):
     BSC_MAINNET = 56
     BSC_TESTNET = 97
+
 
 def check_address(contract_address):
     """Checks address"""
@@ -73,6 +72,7 @@ class CryptoNetworkConnector:
     """
     Automatically connect to testnet or mainet
     """
+
     def __init__(self, network: Network):
         self.selected_network = network
 
@@ -89,7 +89,6 @@ class CryptoNetworkConnector:
             self.explorer_url = "https://testnet.bscscan.com/"
             self.automate_market_maker = "https://pancake.kiemtienonline360.com/"
             print("Faucet  : https://testnet.binance.org/faucet-smart")
-
 
         if network == Network.BSC_MAINNET:
             messege = "Running BSC mainnet..."
@@ -131,7 +130,6 @@ class CryptoNetworkConnector:
     def get_router(self):
         "Get factory object"
         return self.web3.eth.contract(address=self.router_address, abi=ABI_ROUTER)
-
 
     def _get_pair_address(self, contract_address, base_currency: ChecksumAddress):
         pair_address = self.get_factory().functions.getPair(base_currency, check_address(contract_address)).call()
@@ -191,9 +189,8 @@ class CryptoNetworkConnector:
 
     def get_abi_web(self, contract_address):
         """ Works in bsc mainet not testnet"""
-        # https://api-testnet.bscscan.com//api?module=contract&action=getabi&address=0x6418e40b58c69c779c517b131c969afdaf80f955
-        # other chains
-        # https://github.com/xTeKc/CrypDAT/tree/main/Blockchains
+
+
         url = self.explorer_api_url + "/api?module=contract&action=getabi&address=" + contract_address
 
         headers = {
@@ -211,14 +208,17 @@ class CryptoNetworkConnector:
         }
 
         response = requests.get(url, headers)
-
-        response_json = response.json()
-        abi_json = json.loads(response_json['result'])
-        # result = json.dumps({"abi": abi_json}, indent=4, sort_keys=True)
-        result = json.dumps({"abi": abi_json})
-        open('.tmpABI', 'w').write(result),
-        assert response_json.get("result"), "Can't receive remote ABI"
-        return json.loads(response_json.get("result"))
+        if response.ok:
+            response_json = response.json()
+            abi_json = json.loads(response_json['result'])
+            # result = json.dumps({"abi": abi_json}, indent=4, sort_keys=True)
+            result = json.dumps({"abi": abi_json})
+            open('.tmpABI', 'w').write(result),
+            assert response_json.get("result"), "Can't receive remote ABI"
+            return json.loads(response_json.get("result"))
+        else:
+            print(f"Bad response {response.status_code}")
+            return False
 
     def get_bnb_price(self):
         try:
@@ -232,7 +232,7 @@ class CryptoNetworkConnector:
                 return
 
         except TypeError:
-           raise "Please add 'BSC_MAINNET_EXPLORER_API_KEY' api in .evn "
+            raise "Please add 'BSC_MAINNET_EXPLORER_API_KEY' api in .evn "
         return price
 
     def print_transaction_link(self, transaction_hash):
@@ -262,13 +262,24 @@ class CryptoNetworkConnector:
 
 
 def main():
-    n = CryptoNetworkConnector(Network.BSC_TESTNET)
-    # n.get_abi("0x2859e4544c4bb03966803b044a93563bd2d0dd4d")  # Mainnet
-    n.get_bnb_price()
-    fak = n.get_factory()
-    pari_address = n._get_pair_address("0xc2A2d9D339d70343e068E2D7414D3361093C06e5", base_currency=n.wbnb)
+    network = Network.BSC_MAINNET
+    bsc_testnet_address_random = "0x0ee1fb06ca68c4ef9f5350493d14bac6359ffd23"
+    bsc_mainet_address_rubic = "0x8E3BCC334657560253B83f08331d85267316e08a"
+    if network == Network.BSC_TESTNET:
+        address = bsc_testnet_address_random
+    if network == Network.BSC_MAINNET:
+        address = bsc_mainet_address_rubic
+
+    print(f"Quering: {address}")
+    n = CryptoNetworkConnector(network)
+    #n.get_bnb_price()
+    # faktory = n.get_factory()
+    # pari_address = n._get_pair_address(address, base_currency=n.wbnb)
     # price = n.get_price_in_dollars("0x6e0bef56b648b3eebae3808b8cbe7efe8755ad9c", base_currency=n.wbnb) #Mainet
-    price = n.get_price_in_dollars("0xA5F1b78C3909e8Ff66CE939dc9357008c9344633", base_currency=n.wbnb) #Testnet
+    #price = n.get_price_in_dollars(address, base_currency=n.wbnb)  # Testnet
+    a = n.get_abi_web(address)
+
+    print("test")
 
 
 if __name__ == "__main__":
