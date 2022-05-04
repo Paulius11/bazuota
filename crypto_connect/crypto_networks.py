@@ -73,7 +73,7 @@ class CryptoNetworkConnector:
     Automatically connect to testnet or mainet
     """
 
-    def __init__(self, network: Network):
+    def __init__(self, network: Network, just_print=False):
         self.selected_network = network
 
         if network == Network.BSC_TESTNET:
@@ -115,7 +115,7 @@ class CryptoNetworkConnector:
         print(f'API      : {self.explorer_api_url}')
         print(f'EXPLORER : {self.explorer_url}')
         print(f'AMM      : {self.automate_market_maker}')
-
+        if just_print: exit(0)
         self.web3 = self.init_web3()
         print(f'Connected: {self.web3.isConnected()}')
 
@@ -245,14 +245,14 @@ class CryptoNetworkConnector:
         base_url = "https://bscscan.com"
         if self.selected_network == Network.BSC_TESTNET:
             base_url = "https://testnet.bscscan.com"
-        print(f'Address: {base_url}/address/{address}')
-        print(f'Token  : {base_url}/token/{address}')
+        print(f'Created token: {base_url}/address/{address}')
+        print(f'Token        : {base_url}/token/{address}')
 
     def print_pair(self, pair_tx):
         base_url = "https://bscscan.com"
         if self.selected_network == Network.BSC_TESTNET:
             base_url = "https://testnet.bscscan.com"
-        print(f'Pair: {base_url}/address/{pair_tx}')
+        print(f'LP Pair: {base_url}/address/{pair_tx}')
 
     def print_verify_link(self, created_contract_address):
         base_url = "https://bscscan.com"
