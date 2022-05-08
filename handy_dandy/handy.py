@@ -1,10 +1,13 @@
 import time
 from loguru import logger
 from os.path import abspath, dirname
+import  os
 
 # Absolute directory path
 PROJECT_PATH = abspath(dirname(__file__))
 
+THIS_PATH = os.path.abspath(os.path.dirname(__file__))
+RUNNER_PATH = os.getcwd()
 
 def timeit(method):
     """
@@ -57,3 +60,29 @@ def single_yes_or_no_question(question, default_no=True):
         return False
     else:
         return False if default_no else True
+
+class Open(object):
+    """
+    Contect manger for opening files
+
+    with Open('pancake-LP-abi') as f:
+        pancake_LP_ABI = f
+    """
+    def __init__(self, file_name):
+        try:
+            file_path1 = file_name
+            self.file_obj = open(file_path1, 'r').read()
+        except FileNotFoundError:
+            try:
+                file_path2 = os.path.join(RUNNER_PATH, file_name)
+                self.file_obj = open(file_path2, 'r').read()
+            except FileNotFoundError:
+                file_path3 = os.path.join(THIS_PATH, file_name)
+                self.file_obj = open(file_path3, 'r').read()
+
+    def __enter__(self):
+        return self.file_obj
+
+    def __exit__(self, type, value, traceback):
+        print(f"File loaded...")
+
