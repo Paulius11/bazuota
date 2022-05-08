@@ -115,7 +115,7 @@ class CryptoNetworkConnector:
         print(f'API      : {self.explorer_api_url}')
         print(f'EXPLORER : {self.explorer_url}')
         print(f'AMM      : {self.automate_market_maker}')
-        if just_print: exit(0)
+        if just_print: SystemExit
         self.web3 = self.init_web3()
         print(f'Connected: {self.web3.isConnected()}')
 
