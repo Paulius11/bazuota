@@ -70,19 +70,19 @@ class Open(object):
     """
     def __init__(self, file_name):
         try:
-            file_path1 = file_name
-            self.file_obj = open(file_path1, 'r').read()
+            self.file_path = file_name
+            self.file_obj = open(self.file_path, 'r').read()
         except FileNotFoundError:
             try:
-                file_path2 = os.path.join(RUNNER_PATH, file_name)
-                self.file_obj = open(file_path2, 'r').read()
+                self.file_path = os.path.join(RUNNER_PATH, file_name)
+                self.file_obj = open(self.file_path, 'r').read()
             except FileNotFoundError:
-                file_path3 = os.path.join(THIS_PATH, file_name)
-                self.file_obj = open(file_path3, 'r').read()
+                self.file_path = os.path.join(THIS_PATH, file_name)
+                self.file_obj = open(self.file_path, 'r').read()
 
     def __enter__(self):
         return self.file_obj
 
     def __exit__(self, type, value, traceback):
-        print(f"File loaded...")
+        logger.info(f"file loaded: {self.file_path}")
 
