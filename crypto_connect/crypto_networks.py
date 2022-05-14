@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from decimal import Decimal
 from enum import Enum
@@ -19,7 +20,9 @@ file_env_path = path.join(RUNNER_PATH, ".env")
 config_private = dotenv_values(file_env_path)
 
 if not os.path.exists(file_network_path): raise ValueError(f'.network file not found in {file_network_path}')
-if not os.path.exists(file_env_path): raise ValueError(f'.env file not found in {file_env_path}')
+if not os.path.exists(file_env_path):
+    logging.warning(f'.env file not found in working dir\n'
+                 f'BSC_MAINNET_BLOCK_EXPLORER_API_KEY is recomended')
 
 BSC_MAINNET = config_network.get("BSC_MAINNET")
 
@@ -117,10 +120,13 @@ class CryptoNetworkConnector:
         print(f'AMM      : {self.automate_market_maker}')
         if just_print: SystemExit
         self.web3 = self.init_web3()
-        print(f'Connected: {self.web3.isConnected()}')
+
+    def get_web3(self):
+        return self.web3
 
     def init_web3(self):
         self.web3 = Web3(Web3.HTTPProvider(self.network))
+        print(f'Connected: {self.web3.isConnected()}')
         return self.web3
 
     def get_factory(self):
@@ -247,6 +253,10 @@ class CryptoNetworkConnector:
             base_url = "https://testnet.bscscan.com"
         print(f'Created token: {base_url}/address/{address}')
         print(f'Token        : {base_url}/token/{address}')
+
+    def print_charts(self, address):
+        print(f'Chart: https://poocoin.app/tokens/{address}')
+
 
     def print_pair(self, pair_tx):
         base_url = "https://bscscan.com"
