@@ -255,7 +255,7 @@ class CryptoNetworkConnector:
         print(f'Token        : {base_url}/token/{address}')
 
     def print_charts(self, address):
-        print(f'Chart: https://poocoin.app/tokens/{address}')
+        print(f'Charts       :  https://poocoin.app/tokens/{address}')
 
 
     def print_pair(self, pair_tx):
